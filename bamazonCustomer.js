@@ -18,12 +18,18 @@ connection.connect(function (err) {
 function runQuery() {
   connection.query("SELECT * FROM products", function (err, res) {
     if (err) throw err;
+    console.log(res);
+    // The app then prompts users with two messages.
+    userPrompt(res);
   });
 }
 
-// The app then prompts users with two messages.
+function userPrompt(inventory) {
 // The first asks them the ID of the product they would like to buy.
+
 // The second message asks how many units of the product they would like to buy.
+
+}
 
 // Check if your store has enough inventory to meet the customer's request.
 
