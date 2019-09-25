@@ -20,16 +20,45 @@ function runQuery() {
     if (err) throw err;
     console.log(res);
     // The app then prompts users with two messages.
-    userPrompt(res);
+    idPrompt(res);
   });
 }
 
-function userPrompt(inventory) {
-// The first asks them the ID of the product they would like to buy.
+function idPrompt(inventory) {
+  // The first asks them the ID of the product they would like to buy.
+  inquirer
+    .prompt([
+      {
+        name: "id",
+        message: "What is the ID of the product you would like to buy? (Please enter a number.)",
+        type: "input",
+        validate: function(val) {
+          if (isNaN(val) === false) {
+            return true;
+          }
+          return false;
+        }
+      }
+      .then(function(val) {
+        var productId = parseInt(val.id);
+        var product = checkInventory(productId, inventory);
 
-// The second message asks how many units of the product they would like to buy.
+        if (product) {
+          unitPrompt(product);
+        }
+        else {
+          console.log("\nSorry, that product is not available.");
+          runQuery();
+        }
+      })
+    ])
+}
+
+function unitPrompt() {
+  // The second message asks how many units of the product they would like to buy.
 
 }
+
 
 // Check if your store has enough inventory to meet the customer's request.
 
